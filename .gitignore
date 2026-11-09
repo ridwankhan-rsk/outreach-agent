@@ -1,0 +1,26 @@
+# --- environments / build output ---
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+
+# --- personal data: never commit ---
+# your facts, signature and links
+profile.yaml
+# your real sent emails, and a summary of how you write
+voice/samples.jsonl
+voice/style_guide.md
+# real contacts (the generic example templates are kept)
+leads/*
+!leads/*_template.csv
+# resumes and mail exports
+*.pdf
+*.mbox
+*.eml
+
+# --- secrets (they live in the macOS Keychain, but just in case) ---
+.env
+credentials.json
+*client_secret*.json
+*token*
+*.log

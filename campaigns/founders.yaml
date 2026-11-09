@@ -1,0 +1,23 @@
+name: founders
+enabled: true
+
+audience: "Founders / early employees at early-stage startups"
+goal: "Express genuine interest in what they're building and ask if they take interns or early hires."
+
+register: professional
+
+# A founder email without a specific hook reads as spam, so we require one.
+# Put something real in the 'note' column, e.g. "just launched X", "raised a seed round".
+required_fields: [name, org, note]
+
+daily_cap: 15
+followups: 0
+followup_after_days: 14
+attach_resume: false         # a short note reads better without a file; they can ask for it
+length_words: [60, 120]
+
+instructions: |
+  - First sentence must reference the 'note' about their company, in my own words.
+  - Say briefly what I can do (from my profile highlights), concretely, in one sentence.
+  - Ask a small question or offer a short chat. Don't ask for a job outright.
+  - Keep it casual-professional; founders are busy. Short paragraphs.

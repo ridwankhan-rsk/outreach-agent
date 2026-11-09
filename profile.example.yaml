@@ -1,0 +1,28 @@
+# profile.yaml — facts about YOU that the agent is allowed to use in emails.
+#
+# This is the "source of truth". The agent is forbidden from claiming anything
+# about you that isn't written here, so be accurate and specific.
+# Copy this file to profile.yaml and replace every TODO.
+# (The agent refuses to run while any "TODO" is left in profile.yaml.)
+
+name: "TODO your full name"
+first_name: "TODO"
+email_signature: |
+  Best,
+  TODO your name
+  TODO your school / a link (LinkedIn, GitHub, site)
+
+background:
+  school: "TODO e.g. State University"
+  degree: "TODO e.g. B.S. Computer Science"
+  graduation: "TODO e.g. May 2027"
+  # Short, factual bullets the agent can draw from (projects, research, jobs).
+  highlights:
+    - "TODO e.g. Built a topic-modelling pipeline for ..."
+    - "TODO"
+
+looking_for:
+  summary: "TODO e.g. summer 2027 software/ML internship"
+
+links:
+  - "TODO e.g. https://github.com/yourname"

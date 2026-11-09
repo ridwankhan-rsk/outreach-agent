@@ -1,0 +1,26 @@
+name: professors
+enabled: true
+
+audience: "University professors who run research labs"
+goal: "Ask whether the professor has openings for an undergraduate/graduate research assistant."
+
+register: formal
+
+# Research emails live or die on specificity. 'research_area' or 'paper_title' MUST come from
+# the CSV (look it up yourself); the agent will not invent anything about their work.
+required_fields: [name, org, research_area]
+
+daily_cap: 8                 # university mail filters are strict — keep this lowest
+followups: 1                 # one polite follow-up is normal in academia
+followup_after_days: 14
+attach_resume: true          # first email only; follow-ups never attach anything
+length_words: [110, 180]
+
+instructions: |
+  - Address them as "Professor <last name>" (or "Dr." if the 'title' column says so).
+  - Mention their research area (and the paper, if 'paper_title' is provided) accurately
+    and only as described in the provided facts. Do not describe findings you were not given.
+  - Connect it to one relevant thing from my profile (coursework, project, research).
+  - State availability/timeframe only if it appears in my profile.
+  - Close by asking if they are taking students and if a short meeting would be possible.
+  - Formal but warm. No exclamation marks.

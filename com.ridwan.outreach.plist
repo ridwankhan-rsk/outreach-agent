@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  LaunchAgent: starts the outreach daemon when you log in and restarts it if it crashes.
+  Install with:   python cli.py install-daemon
+  Remove with:    python cli.py uninstall-daemon
+-->
+<plist version="1.0">
+<dict>
+  <key>Label</key>
+  <string>com.ridwan.outreach</string>
+
+  <key>ProgramArguments</key>
+  <array>
+    <string>__PROJECT_DIR__/.venv/bin/python</string>
+    <string>__PROJECT_DIR__/cli.py</string>
+    <string>run</string>
+  </array>
+
+  <key>WorkingDirectory</key>
+  <string>__PROJECT_DIR__</string>
+
+  <key>RunAtLoad</key>
+  <true/>
+  <key>KeepAlive</key>
+  <true/>
+  <key>ThrottleInterval</key>
+  <integer>30</integer>
+
+  <key>StandardOutPath</key>
+  <string>__DATA_DIR__/launchd.out.log</string>
+  <key>StandardErrorPath</key>
+  <string>__DATA_DIR__/launchd.err.log</string>
+</dict>
+</plist>

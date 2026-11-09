@@ -1,0 +1,39 @@
+# A "campaign" is one use case. To add a new one, copy this file, rename it,
+# and edit the fields — no code changes needed.
+
+name: recruiters
+enabled: true
+
+# Who we're writing to and why (the model sees this).
+audience: "Technical recruiters / university recruiters at tech companies"
+goal: "Introduce myself briefly and ask whether they have Summer 2027 internship roles (software engineering or data science / machine learning) that fit my background."
+
+# Which of your writing samples to use as the voice reference:
+# formal | professional | casual
+register: professional
+
+# Lead-CSV columns that MUST be present, or the lead is skipped (never guessed).
+# 'email' is always required.
+required_fields: [name, org]
+
+# Limits for this campaign (the global caps in config.py still apply on top).
+daily_cap: 15
+followups: 0                 # 0 = never follow up; 1 = one follow-up max
+followup_after_days: 12
+
+# Attach your current resume (the PDF uploaded with `cli.py set-resume` or the portal) to the
+# FIRST email. It is the only file the agent can ever attach. If true and no resume has been
+# uploaded, nothing in this campaign is sent.
+attach_resume: true
+
+# Length of the email body, in words.
+length_words: [70, 130]
+
+# Extra instructions for this audience.
+instructions: |
+  - I am looking for INTERNSHIPS only. Never mention new-grad, full-time or entry-level roles.
+  - Open with one short line about why I'm writing to them specifically,
+    using ONLY the facts provided about them.
+  - Mention one or two relevant highlights from my profile. Don't list everything.
+  - End with one clear, low-pressure ask (e.g. a pointer to the right person or role).
+  - No flattery, no buzzwords, no "I hope this email finds you well".

@@ -1,0 +1,28 @@
+# Used by the automatic Hacker News intake for hiring posts that give an email address but
+# no named person (e.g. "jobs@company.com"). Posts that name a contact use `founders` instead.
+name: hiring_team
+enabled: true
+
+audience: "The hiring team at an early-stage startup that posted a public hiring contact on Hacker News"
+goal: "Introduce myself briefly and ask whether the company takes Summer 2027 software engineering or data science / machine learning interns."
+
+register: professional
+
+# 'note' (what the company does / is hiring for) comes from their own post. The agent will not
+# write to a company it has no real detail about.
+required_fields: [org, note]
+
+daily_cap: 15
+followups: 0
+followup_after_days: 14
+attach_resume: true
+length_words: [60, 120]
+
+instructions: |
+  - No person is named, so open with "Hello <company> team," using the org name exactly as given.
+  - First sentence: say I saw their hiring post on Hacker News and refer to what they do or are
+    hiring for, using ONLY the 'note' and 'post_excerpt' facts, in my own words.
+  - Say briefly what I can do (one or two highlights from my profile). Don't list everything.
+  - Ask politely whether they take Summer 2027 interns, or who the right person to ask would be.
+  - I am looking for INTERNSHIPS only. Never ask about full-time, new-grad or entry-level roles.
+  - Do not copy their email address into the body. No flattery, no buzzwords.
