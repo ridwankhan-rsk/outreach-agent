@@ -700,15 +700,15 @@ class IntakeJudgeTests(unittest.TestCase):
             self.assertIsNotNone(intake.judge(post, found(company="Firm", contact_email=f"jobs@{dom}"))[0], dom)
 
     def test_name_must_match_the_address(self):
-        """'Dylan' named in the post but the address is careers@ -> team greeting, not 'Dear Dylan'."""
-        post = "BuildQ | Engineer | Dylan, founder. Apply: careers@buildq.ai"
-        row, _ = intake.judge(post, found(company="BuildQ", contact_email="careers@buildq.ai",
-                                          contact_name="Dylan"))
+        """'Dana' named in the post but the address is careers@ -> team greeting, not 'Dear Dana'."""
+        post = "Northwind | Engineer | Dana, founder. Apply: careers@northwind.example"
+        row, _ = intake.judge(post, found(company="Northwind", contact_email="careers@northwind.example",
+                                          contact_name="Dana"))
         self.assertEqual(row["name"], "")
-        post = "BuildQ | Engineer | Contact Dylan Reyes dylan@buildq.ai"
-        row, _ = intake.judge(post, found(company="BuildQ", contact_email="dylan@buildq.ai",
-                                          contact_name="Dylan Reyes"))
-        self.assertEqual(row["name"], "Dylan Reyes")
+        post = "Northwind | Engineer | Contact Dana Fox dana@northwind.example"
+        row, _ = intake.judge(post, found(company="Northwind", contact_email="dana@northwind.example",
+                                          contact_name="Dana Fox"))
+        self.assertEqual(row["name"], "Dana Fox")
 
     def test_html_to_text(self):
         t = intake.to_text('A | B<p>mail <a href="https://x.com/jobs" rel="nofollow">https://x.com/j...</a> &amp; me')
@@ -791,6 +791,33 @@ class IntakeRunTests(unittest.TestCase):
         with mock.patch("intake.extract", side_effect=RuntimeError("api down")):
             self.assertEqual(intake.run_once()["added"], 0)
         self.assertEqual(intake.run_once()["added"], 3)           # not marked seen, so tried again
+
+
+class RepoHygieneTests(unittest.TestCase):
+    """Real people's email addresses must never be committed (this repo is public)."""
+    ROOT = Path(__file__).resolve().parent.parent
+
+    def setUp(self):
+        sys.path.insert(0, str(self.ROOT / "scripts"))
+        import check_emails
+        self.chk = check_emails
+
+    def test_allowlist_logic(self):
+        v = self.chk.violations
+        self.assertEqual(v("jane@example.com a@x.com you@gmail.com dana@northwind.example"), [])
+        # (built with + so this file does not itself contain a non-allowlisted address)
+        real, personal = "careers@" + "realco.io", "someone@" + "gmail.com"
+        self.assertEqual(v(real), [real])
+        self.assertEqual(v(personal), [personal])        # only the two placeholder gmail addresses are allowed
+        self.assertEqual(v(f"a@x.com and {real}"), [real])
+
+    def test_no_real_emails_in_tracked_files(self):
+        import subprocess
+        if not (self.ROOT / ".git").exists():
+            self.skipTest("not a git checkout")
+        r = subprocess.run([sys.executable, str(self.ROOT / "scripts" / "check_emails.py")],
+                           cwd=self.ROOT, capture_output=True, text=True)
+        self.assertEqual(r.returncode, 0, r.stdout)
 
 
 class RecheckQueueTests(unittest.TestCase):

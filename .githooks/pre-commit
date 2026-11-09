@@ -1,0 +1,4 @@
+#!/bin/sh
+# Blocks commits that contain real people's email addresses. Enable with:
+#   git config core.hooksPath .githooks
+exec python3 "$(git rev-parse --show-toplevel)/scripts/check_emails.py" --staged

@@ -128,3 +128,15 @@ Copy a file in `campaigns/`, rename it, and edit `audience`, `goal`, `required_f
 ```bash
 .venv/bin/python tests/test_offline.py     # offline: Gmail, Claude and popups are mocked
 ```
+
+## Keeping private data out of git
+Your profile, voice samples, style guide, contacts and resumes are git-ignored, and secrets live in
+the Keychain. As a second line of defence, a pre-commit hook blocks any commit containing an email
+address that isn't a known placeholder (so a real lead can't end up in a test or a doc by accident).
+Enable it once per clone:
+
+```bash
+git config core.hooksPath .githooks
+```
+
+Use fictional addresses (`jane@example.com`) in tests and docs. The same check runs as a test.
