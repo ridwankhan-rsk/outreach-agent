@@ -13,7 +13,7 @@ Trust model: Claude only *proposes*. The code then verifies that
   * a contact name, if used, appears word-for-word in the post,
   * the address is not a no-reply/role mailbox, and the company is not already queued or contacted.
 Everything else (caps, cooldowns, suppression, fact-check, bounce auto-pause) is the existing
-pipeline. New leads also wait INTAKE_GRACE_HOURS before their first email, so you can remove one
+pipeline. New leads also wait INTAKE_GRACE_HOURS_MIN..MAX before their first email, so you can remove one
 in the portal.
 
 Only the public HN API is used (two requests per run); it respects the site's terms.
@@ -23,6 +23,7 @@ from __future__ import annotations
 import html
 import json
 import logging
+import random
 import re
 import time
 import urllib.request
@@ -332,7 +333,9 @@ def run_once(dry_run: bool = False, max_posts: Optional[int] = None) -> dict:
                 ok, why = db.can_add_lead(conn, row["email"])
             else:
                 ok, why = db.add_lead(conn, campaign, row, source=SOURCE,
-                                      delay_seconds=config.INTAKE_GRACE_HOURS * 3600)
+                                      delay_seconds=int(random.uniform(
+                                          config.INTAKE_GRACE_HOURS_MIN,
+                                          config.INTAKE_GRACE_HOURS_MAX) * 3600))
             if not ok:
                 mark(post["id"], why)
                 continue

@@ -39,7 +39,8 @@ def _intake_job() -> None:
             notify.quiet_notice(
                 "Outreach intake",
                 f"Added {s['added']} new lead(s) from Hacker News. They send after a "
-                f"{config.INTAKE_GRACE_HOURS}h grace period; remove any in the portal.")
+                f"{config.INTAKE_GRACE_HOURS_MIN}-{config.INTAKE_GRACE_HOURS_MAX}h grace period; "
+                "remove any in the portal.")
     except Exception:
         log.exception("intake failed; will retry")
     finally:

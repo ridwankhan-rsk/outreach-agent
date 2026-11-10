@@ -74,7 +74,10 @@ INTAKE_ENABLED = True
 INTAKE_CHECK_SECONDS = 6 * 3600      # how often the daemon looks for new posts
 INTAKE_MAX_PER_DAY = 10              # new leads auto-added per day
 INTAKE_QUEUE_MAX = 40                # stop adding while this many are still waiting to be emailed
-INTAKE_GRACE_HOURS = 24              # a new auto lead waits this long (you can remove it in the portal)
+# A new auto-found lead waits a random time in this range (hours) before its first email, so you
+# have a short window to remove it in the portal. Random so sends don't look machine-timed.
+INTAKE_GRACE_HOURS_MIN = 1
+INTAKE_GRACE_HOURS_MAX = 2
 INTAKE_POST_MAX_AGE_DAYS = 45        # ignore old posts
 INTAKE_MAX_POSTS_PER_RUN = 60        # cap on Claude calls per run (cost control)
 

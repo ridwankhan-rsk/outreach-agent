@@ -746,7 +746,9 @@ class IntakeRunTests(unittest.TestCase):
             rows = c.execute("SELECT * FROM leads").fetchall()
             self.assertEqual({r["campaign"] for r in rows}, {"hiring_team"})
             self.assertTrue(all(r["source"] == "hn-hiring" for r in rows))
-            self.assertTrue(all(r["eligible_at"] >= db.now() + config.INTAKE_GRACE_HOURS * 3600 - 5 for r in rows))
+            lo = config.INTAKE_GRACE_HOURS_MIN * 3600
+            hi = config.INTAKE_GRACE_HOURS_MAX * 3600
+            self.assertTrue(all(lo - 5 <= r["eligible_at"] - db.now() <= hi + 5 for r in rows))   # 1-2 h window
             self.assertEqual(json.loads(rows[0]["data_json"])["found_via"], "Hacker News 'Who is hiring?' thread")
 
     def test_each_post_judged_only_once(self):

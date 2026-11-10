@@ -89,7 +89,7 @@ A background job reads the newest thread through the public HN API, has Claude e
 then **re-checks everything in code** before queueing: the contact email must appear word for word
 in the post, role/no-reply mailboxes and non-US country domains are dropped, posts that explicitly
 place the company outside the US are skipped, and a person is greeted by name only if the name
-matches the address. New leads wait 24 hours (`INTAKE_GRACE_HOURS`) before their first email, so
+matches the address. New leads wait a random 1-2 hours (`INTAKE_GRACE_HOURS_MIN/MAX`) before their first email, so
 you can delete one in the portal. `cli.py intake --dry-run` previews without saving.
 
 ### Portal
